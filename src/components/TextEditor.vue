@@ -120,12 +120,6 @@
         </v-card>
 
         <ValidationProvider v-slot="{ errors }" name="Message" :rules="required ? 'required' : null">
-            <!-- <v-card v-if="quotedPost !== null" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0">
-                <v-card-title class="blue darken-4 subtitle pa-2">
-                    Vous citez le post de {{ quotedPost.User.Name }}
-                </v-card-title>
-            </v-card> -->
-            <!-- <v-textarea v-model="content" @change="$emit('input', content)" ref="textarea" :error-messages="errors" hide-details outlined /> -->
             <v-card v-if="quotedPost !== null" outlined style="border-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
                 <v-toolbar class="elevation-0" dense style="background-color: #303436;">
                     <v-toolbar-title>
@@ -157,6 +151,7 @@
                     </v-btn>
                 </v-toolbar>
             </v-card>
+
             <v-textarea v-model="content" @change="$emit('input', content)" ref="textarea" v-bind:class="{ 'textarea-quote': quotedPost !== null }" :error-messages="errors" hide-details outlined />
         </ValidationProvider>
 

@@ -39,7 +39,7 @@ export default {
         this.$store.commit('settings/load');
 
         if (this.$store.state.user.jwt !== null) {
-            this.repos.user.me().then((response) => {
+            this.repos.application.me().then((response) => {
                 if (response.error) {
                     this.$store.commit('user/disconnect');
                 } else {

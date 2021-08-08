@@ -73,9 +73,17 @@
                     </template>
 
                     <v-list dense>
-                        <v-list-item v-if="post.User !== null" @click="$emit('fic-mode', post.User.Id)">
+                        <v-list-item @click="$emit('fic-mode', post.User.Id)">
                             <v-list-item-title> Afficher les posts de cet utilisateur </v-list-item-title>
                         </v-list-item>
+
+                        <ReportDialog :hidden-post-id="post.Id">
+                            <template v-slot:activator="{ on }">
+                                <v-list-item v-on="on">
+                                    <v-list-item-title> Signaler </v-list-item-title>
+                                </v-list-item>
+                            </template>
+                        </ReportDialog>
 
                         <v-list-item v-if="showEdit" @click="toggleEdit()">
                             <v-list-item-title> Modifier </v-list-item-title>
@@ -108,7 +116,7 @@
                 </v-menu>
             </template>
             <template v-else>
-                 <v-tooltip top>
+                <v-tooltip top>
                     <template v-slot:activator="{ on }">
                         <v-btn class="ml-auto" small icon v-on="on" @click="$emit('delete-notification')">
                             <v-icon small> fas fa-times </v-icon>
@@ -164,13 +172,15 @@
 </template>
 
 <script>
-import TextEditor from '../../TextEditor';
-import AccountMenu from './AccountMenu';
-import QuotedPost from './QuotedPost';
+import TextEditor from '../../TextEditor.vue';
+import AccountMenu from './AccountMenu.vue';
+import QuotedPost from './QuotedPost.vue';
+import ReportDialog from '../../dialogs/ReportDialog.vue';
 
 import initBlockquote from '../../../helpers/initBlockquote';
 import initEmbedMedia from '../../../helpers/initEmbedMedia';
 import initCode from '../../../helpers/initCode';
+
 
 export default {
     name: 'Post',
@@ -178,7 +188,8 @@ export default {
     components: {
         TextEditor,
         QuotedPost,
-        AccountMenu
+        AccountMenu,
+        ReportDialog
     },
 
     props: {

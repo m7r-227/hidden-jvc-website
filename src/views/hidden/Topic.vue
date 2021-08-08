@@ -223,8 +223,7 @@ export default {
                     this.$router.push({ query });
                 }
 
-
-                const { forum, topic, posts, error } = await this.repos.hidden.getTopic(this.$route.params.topicId, this.page, this.userId);
+                const { forum, topic, posts, error } = await this.repos.application.getHiddenTopic(this.$route.params.topicId, query);
                 if (error) {
                     return this.openErrorDialog(error);
                 } else {

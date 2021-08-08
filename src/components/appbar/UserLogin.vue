@@ -66,12 +66,16 @@ export default {
             try {
                 this.setLoading(true);
 
-                const { jwt, error } = await this.repos.user.login(this.name, this.password);
+                const body = {
+                    name: this.name,
+                    password: this.password
+                };
+                const { jwt, error } = await this.repos.application.login(body);
                 if (error) {
                     this.openErrorDialog(error);
                 } else {
                     this.$store.commit('user/setJwt', { jwt });
-                    this.repos.user.me().then((response) => {
+                    this.repos.application.me().then((response) => {
                         this.$store.commit('user/setUser', response.user);
                         this.$store.commit('user/setNotifications', response.notifications);
                     }).catch(console.error);
@@ -92,7 +96,11 @@ export default {
             try {
                 this.setLoading(true);
 
-                const { userId, isAdmin, jwt, moderators, error } = await this.repos.user.register(this.name, this.password);
+                const body = {
+                    name: this.name,
+                    password: this.password
+                };
+                const { userId, isAdmin, jwt, moderators, error } = await this.repos.application.register(body);
                 if (error) {
                     this.openErrorDialog(error);
                 } else {

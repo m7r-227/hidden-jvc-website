@@ -108,7 +108,6 @@ export default {
 
     props: {
         value: {},
-        forum: { required: true },
         topics: { required: true, type: Array },
         displayModerationTools: { require: true, type: Boolean }
     },
@@ -150,7 +149,7 @@ export default {
 
         getTopicUrl(topic) {
             const title = textToUrl(topic.Title);
-            return `/forums/${this.forum.Id}/hidden/${topic.Id}-` + title;
+            return `/forums/${topic.JVCForumId}/hidden/${topic.Id}-` + title;
         },
 
         getTopicLastPage(topic) {

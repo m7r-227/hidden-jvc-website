@@ -48,7 +48,7 @@
                             </v-col>
                         </v-row>
 
-                        <TopicList v-model="selectedTopics" :forum="forum" :topics="topics" :displayModerationTools="displayModerationTools" />
+                        <TopicList v-model="selectedTopics" :topics="topics" :displayModerationTools="displayModerationTools" />
 
                         <CreateTopicForm ref="createTopicForm" :tags="forum.Tags" />
                     </v-col>
@@ -113,10 +113,10 @@ export default {
                 page: this.page
             };
 
-            if (this.search.title !== null) {
+            if (this.search.title) {
                 query.searchTitle = this.search.title;
             }
-            if (this.search.userId !== null) {
+            if (this.search.userId) {
                 query.searchUserId = this.search.userId;
             }
             if (this.search.tagIds.length > 0) {
@@ -173,7 +173,7 @@ export default {
                 }
 
                 const query = this.buildQuery();
-                const { forum, topics, count, error } = await this.repos.hidden.getTopics(query);
+                const { forum, topics, count, error } = await this.repos.application.getHiddenTopics(query);
 
                 const end = performance.now();
                 this.$store.commit('application/pushLog', `Topics récupérés en ${(end - start) / 1000}s`);

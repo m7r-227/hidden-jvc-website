@@ -4,7 +4,9 @@ import { parse } from 'hidden-jvc-jvcode';
 
 import user from './repositories/user.js';
 import logs from './repositories/logs.js';
+import reports from './repositories/reports';
 import hidden from './repositories/hidden.js';
+import application from './repositories/application';
 import notifications from './repositories/notifications';
 
 import getUserClass from './helpers/getUserClass.js';
@@ -17,6 +19,8 @@ Vue.mixin({
             user,
             logs,
             hidden,
+            reports,
+            application,
             notifications
         }
     }),
