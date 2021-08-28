@@ -8,9 +8,10 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.8.2",
+        "@hcaptcha/vue-hcaptcha": "^0.3.0",
         "date-fns": "^2.15.0",
         "hidden-jvc-jvcode": "git+https://github.com/Hidden-JVC/hidden-jvc-jvcode.git#1.0.1",
-        "prismjs": "^1.23.0",
+        "prismjs": "^1.24.1",
         "roboto-fontface": "*",
         "socket.io-client": "^4.1.2",
         "vee-validate": "^3.2.4",

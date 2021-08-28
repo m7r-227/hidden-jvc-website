@@ -31,8 +31,8 @@ class ForumRepository extends Repository {
         return await this.post(`hidden/topics/${topicId}`, { title, tags });
     }
 
-    async createPost(topicId, content, postId) {
-        return await this.post('hidden/posts', { topicId, content, postId });
+    async createPost(topicId, content, postId, hcaptcha) {
+        return await this.post('hidden/posts', { topicId, content, postId, hcaptcha });
     }
 
     async updatePost(topicId, postId, data) {

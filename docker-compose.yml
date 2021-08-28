@@ -6,5 +6,6 @@ services:
     build: .
     environment:
       USE_SUB_FOLDER: "0"
+      H_CAPTCHA_SITE_KEY: "10000000-ffff-ffff-ffff-000000000001"
     ports:
       - "6565:80"

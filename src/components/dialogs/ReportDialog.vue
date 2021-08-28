@@ -16,11 +16,14 @@
                     </ValidationProvider>
 
                     <ValidationProvider v-slot="{ errors }" name="Remarques" rules="max:2000">
-                        <v-textarea v-model="comments" label="Remarques" outlined dense  counter="2000" :error-messages="errors" />
+                        <v-textarea v-model="comments" label="Remarques" outlined dense counter="2000" :error-messages="errors" />
                     </ValidationProvider>
                 </ValidationObserver>
 
-                <v-row>
+                <v-row align="center">
+                    <v-col>
+                        <VueHcaptcha theme="dark" language="fr" sitekey="10000000-ffff-ffff-ffff-000000000001" sitekey2="3ffc5510-c569-4455-80ee-7b50ec8b9214" @verify="onHcaptchaVerify" />
+                    </v-col>
                     <v-col class="text-right">
                         <v-btn @click="submit()" color="primary" depressed small>
                             Valider
@@ -33,6 +36,8 @@
 </template>
 
 <script>
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
+
 export default {
     name: 'ReportDialog',
 
@@ -40,11 +45,16 @@ export default {
         hiddenPostId: { default: null }
     },
 
+    components: {
+        VueHcaptcha
+    },
+
     data: () => ({
         open: false,
 
         reason: null,
         comments: null,
+        hCaptchaToken: null,
 
         types: []
     }),
@@ -54,6 +64,10 @@ export default {
             try {
                 const valid = await this.$refs.observer.validate();
                 if (!valid) {
+                    return;
+                }
+
+                if (!this.hCaptchaToken) {
                     return;
                 }
 
@@ -79,6 +93,10 @@ export default {
             } finally {
                 this.setLoading(false);
             }
+        },
+
+        onHcaptchaVerify(token) {
+            this.hCaptchaToken = token;
         }
     },
 

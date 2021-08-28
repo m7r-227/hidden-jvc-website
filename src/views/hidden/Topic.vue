@@ -86,6 +86,8 @@
                             <v-btn @click="createPost()" color="primary" depressed small>
                                 Répondre
                             </v-btn>
+
+                            <VueHcaptcha theme="dark" language="fr" sitekey="3ffc5510-c569-4455-80ee-7b50ec8b9214" @verify="onHcaptchaVerify" />
                         </template>
                     </v-col>
 
@@ -101,6 +103,8 @@
 </template>
 
 <script>
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
+
 import textToUrl from '../../helpers/textToUrl';
 
 import TextEditor from '../../components/TextEditor';
@@ -116,6 +120,7 @@ export default {
         Post,
         LogsCard,
         TextEditor,
+        VueHcaptcha,
         UserListMenu,
         InformationsMenu
     },
@@ -135,7 +140,8 @@ export default {
         quotedPost: null,
 
         displayTitleInput: false,
-        titleInput: ''
+        titleInput: '',
+        hCaptchaToken: null
     }),
 
     computed: {
@@ -249,7 +255,7 @@ export default {
                 this.setLoading(true);
 
                 const topicId = parseInt(this.$route.params.topicId);
-                const { error } = await this.repos.hidden.createPost(topicId, this.content.trim(), this.quotedPost ? this.quotedPost.Id : null);
+                const { error } = await this.repos.hidden.createPost(topicId, this.content.trim(), this.quotedPost ? this.quotedPost.Id : null, this.hCaptchaToken);
                 if (error) {
                     return this.openErrorDialog(error);
                 }
@@ -302,6 +308,10 @@ export default {
             } finally {
                 this.setLoading(false);
             }
+        },
+
+        onHcaptchaVerify(token) {
+            this.hCaptchaToken = token;
         }
     },
 
